@@ -1,4 +1,12 @@
 # Put some miscellaneous rules here
+#
+# Build system colors
+#
+# PFX: Prefix "target C++:" in yellow
+# INS: Module "Install:" output color (cyan for ics)
+ ifneq ($(BUILD_WITH_COLORS),0)
+    include $(TOP_DIR)build/core/colors.mk
+endif
 
 # HACK: clear LOCAL_PATH from including last build target before calling
 # intermedites-dir-for
@@ -3056,11 +3064,17 @@ bacon: lean
 lean: otapackage
 	$(hide) ln -f $(INTERNAL_OTA_PACKAGE_TARGET) $(TARGET_PACKAGE)
 	$(hide) $(MD5SUM) $(TARGET_PACKAGE) > $(TARGET_PACKAGE).md5sum
-	@echo -e ${CL_BLD}${CL_CYN}"===============================-Package complete-==============================="${CL_RST}
+	@echo -e ${CL_RED}""
+        @echo -e ${CL_RED}"    __                    ___  __  "${CL_RED}
+        @echo -e ${CL_RED}"   / /  ___  __ _ _ __   /___\/ _\ "${CL_RED}
+        @echo -e ${CL_RED}"  / /  / _ \/ _` | '_ \ //  //\ \  "${CL_RED}
+        @echo -e ${CL_RED}" / /__|  __/ (_| | | | / \_// _\ \ "${CL_RED}
+        @echo -e ${CL_RED}" \____/\___|\__,_|_| |_\___/  \__/ "${CL_RED}
+	@echo -e ${CL_BLD}${CL_RED}"===============================-Package complete-==============================="${CL_RED}
 	@echo -e ${CL_BLD}${CL_YLW}"Zip: "${CL_YLW} $(TARGET_PACKAGE)${CL_RST}
 	@echo -e ${CL_BLD}${CL_YLW}"MD5: "${CL_YLW}" `cat $(TARGET_PACKAGE).md5sum | awk '{print $$1}' `"${CL_RST}
 	@echo -e ${CL_BLD}${CL_YLW}"Size:"${CL_YLW}" `du -sh $(TARGET_PACKAGE) | awk '{print $$1}' `"${CL_RST}
-	@echo -e ${CL_BLD}${CL_CYN}"================================================================================"${CL_RST}
+	@echo -e ${CL_BLD}${CL_RED}"================================================================================"${CL_RED}
 endif    # build_ota_package
 
 # -----------------------------------------------------------------
